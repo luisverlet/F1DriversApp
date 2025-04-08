@@ -1,31 +1,28 @@
-// Actualización del MainActivity.kt con el TopAppBar modificado
 package com.example.f1driversapp
 
+
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
+import com.example.f1driversapp.navigation.BottomNavBar
+import com.example.f1driversapp.navigation.NavItemList
+import com.example.f1driversapp.screens.AddScreen
+import com.example.f1driversapp.screens.HomeScreen
 import com.example.f1driversapp.ui.theme.F1DriversAppTheme
 
 class MainActivity : ComponentActivity() {
@@ -34,63 +31,51 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             F1DriversAppTheme {
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    DriverApp()
-                }
+                BottomNavScreen()
             }
         }
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
+
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun DriverApp() {
+fun BottomNavScreen(){
+    var selectedIndex by remember { mutableStateOf(0) }
     Scaffold(
-        topBar = {
-            TopAppBar(
-                title = {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Image(
-                            painter = painterResource(id = R.drawable.helmet),
-                            contentDescription = stringResource(id = R.string.app_name),
-                            modifier = Modifier.size(40.dp)
-                        )
-
-                        Spacer(modifier = Modifier.width(8.dp))
-
-                        Text(
-                            text = "F1Drivers",
-                            style = MaterialTheme.typography.headlineMedium
-                        )
-                    }
-                },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primaryContainer,
-                    titleContentColor = MaterialTheme.colorScheme.onPrimaryContainer
-                )
+        modifier = Modifier.fillMaxSize(),
+        bottomBar = {
+            BottomNavBar(
+                navItemList = NavItemList.NavItemList,
+                selectedIndex = selectedIndex,
+                onItemSelected = { selectedIndex = it }
             )
         }
-    ) { innerPadding ->
-        DriversScreen(
-            modifier = Modifier.padding(innerPadding)
-        )
+    ){
+        ContentScreen(selectedIndex)
     }
 }
 
 @Composable
-fun DriversScreen(modifier: Modifier) {
-
+fun ContentScreen(selectedIndex: Int) {
+    when (selectedIndex) {
+        0 -> HomeScreen()
+        1 -> AddScreen()
+    }
 }
 
 @Preview(showBackground = true)
 @Composable
 fun DriverAppPreview() {
     F1DriversAppTheme {
-        DriverApp()
+        BottomNavScreen()
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun DarkDriverAppPreview() {
+    F1DriversAppTheme(darkTheme = true) {
+        BottomNavScreen()
     }
 }
