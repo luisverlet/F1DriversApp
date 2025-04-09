@@ -47,21 +47,24 @@ fun DriversScreen(
                     .padding(dimensionResource(id = R.dimen.padding_small))
             ) {
                 DriverIcon(driver.imageResId)
-                DriverInfo(driver.name, driver.score)
+                DriverInfo(driver.name, driver.score, driver.squad)
+
             }
         }
     }
 }
 
 @Composable
-fun DriverInfo(name: Int, squad: Int) {
-
+fun DriverInfo(name: Int, score: String, squad: Int) {
     Column(modifier = Modifier.padding(start = dimensionResource(R.dimen.padding_small))) {
         Text(
             text = stringResource(name),
             style = MaterialTheme.typography.headlineSmall,
             modifier = Modifier.padding(top = dimensionResource(R.dimen.padding_small))
-
+        )
+        Text(
+            text = "Score: $score",
+            style = MaterialTheme.typography.bodyLarge,
         )
         Text(
             text = stringResource(squad),
@@ -69,7 +72,6 @@ fun DriverInfo(name: Int, squad: Int) {
             modifier = Modifier.padding(bottom = dimensionResource(R.dimen.padding_small))
         )
     }
-
 }
 
 @Composable
