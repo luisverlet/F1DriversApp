@@ -29,6 +29,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import com.example.f1driversapp.R
+import com.example.f1driversapp.ui.theme.md_theme_dark_primary
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -54,7 +55,6 @@ fun DriverTopAppBar(modifier: Modifier = Modifier) {
     )
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun F1SearchBar(
     searchText: String,
@@ -115,12 +115,15 @@ fun F1SearchBar(
         keyboardActions = KeyboardActions(
             onSearch = { focusManager.clearFocus() }
         ),
-        colors = TextFieldDefaults.textFieldColors(
-            containerColor = MaterialTheme.colorScheme.surfaceVariant,
+        colors = TextFieldDefaults.colors(
+            focusedTextColor = md_theme_dark_primary,
+            unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
+            disabledTextColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
+            focusedContainerColor = MaterialTheme.colorScheme.surfaceVariant,
+            unfocusedContainerColor = MaterialTheme.colorScheme.surfaceVariant,
+            cursorColor = MaterialTheme.colorScheme.primary,
             focusedIndicatorColor = Color.Transparent,
-            unfocusedIndicatorColor = Color.Transparent,
-            disabledIndicatorColor = Color.Transparent,
-            cursorColor = MaterialTheme.colorScheme.primary
+            unfocusedIndicatorColor = Color.Transparent
         ),
         shape = MaterialTheme.shapes.large
     )

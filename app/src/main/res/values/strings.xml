@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">F1DriversApp</string>
+    //Drivers
+    <string name="driver1">Charles Lecrec</string>
+    <string name="driver2">Lewis Hamilton</string>
+    <string name="driver1_about">The fastest man alive</string>
+    <string name="driver2_about">The slowest man alive</string>
+    <string name="driver1_squad">RedBull</string>
+    <string name="driver2_squad">Ferrari</string>
+
 </resources>
