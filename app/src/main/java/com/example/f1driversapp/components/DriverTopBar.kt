@@ -109,8 +109,8 @@ fun F1SearchBar(
             color = MaterialTheme.colorScheme.onSurface
         ),
         keyboardOptions = KeyboardOptions(
-            imeAction = ImeAction.Search,
-            autoCorrect = false
+            autoCorrectEnabled = false,
+            imeAction = ImeAction.Search
         ),
         keyboardActions = KeyboardActions(
             onSearch = { focusManager.clearFocus() }
