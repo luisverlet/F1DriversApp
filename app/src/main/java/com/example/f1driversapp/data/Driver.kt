@@ -10,7 +10,6 @@ data class Driver(
     val score : String,
     @StringRes val about: Int,
     @StringRes val squad: Int,
-
 )
 
 val drivers = listOf(
