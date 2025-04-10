@@ -34,7 +34,14 @@
     <string name="loading_pilots">Loading drivers and images . . . </string>
     <string name="unknown_error">An unknown error occurred</string>
 
+    <string name="error_empty_name">Name cannot be empty</string>
+    <string name="error_empty_squad">Squad cannot be empty</string>
+    <string name="error_empty_rating">Rating cannot be empty</string>
+    <string name="error_rating_range">Rating must be between 0 and 100</string>
+    <string name="error_invalid_rating">Rating must be a valid number</string>
 
+    <string name="driver_added_success">Driver added successfully</string>
+    <string name="error_prefix">Error: %1$s</string>
 
 
 

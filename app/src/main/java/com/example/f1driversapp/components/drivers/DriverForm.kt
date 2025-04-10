@@ -12,7 +12,6 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import com.example.f1driversapp.R
 import com.example.f1driversapp.components.buttons.ConfirmButton
-import com.example.f1driversapp.models.Driver
 import com.example.f1driversapp.utils.DriverValidator
 import com.example.f1driversapp.utils.DriverCreator
 import kotlinx.coroutines.CoroutineScope
@@ -105,6 +104,7 @@ fun DriverForm(
             isLoading = isLoading,
             onClick = {
                 if (DriverValidator.validateFields(
+                        context,
                         name.text,
                         escuderia.text,
                         rating.text,
@@ -124,11 +124,15 @@ fun DriverForm(
                         onStartLoading = { isLoading = true },
                         onFinishLoading = { isLoading = false },
                         onSuccess = {
-                            Toast.makeText(context, "Driver added successfully", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, context.getString(R.string.driver_added_success), Toast.LENGTH_SHORT).show()
                             onDriverCreated()
                         },
                         onError = { error ->
-                            Toast.makeText(context, "Error: $error", Toast.LENGTH_LONG).show()
+                            Toast.makeText(
+                                context,
+                                context.getString(R.string.error_prefix, error),
+                                Toast.LENGTH_LONG
+                            ).show()
                         }
                     )
                 }

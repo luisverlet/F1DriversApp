@@ -1,7 +1,11 @@
 package com.example.f1driversapp.utils
 
+import android.content.Context
+import com.example.f1driversapp.R
+
 object DriverValidator {
     fun validateFields(
+        context: Context,
         name: String,
         escuderia: String,
         rating: String,
@@ -12,27 +16,27 @@ object DriverValidator {
         var isValid = true
 
         if (name.isBlank()) {
-            onNameError("Name cannot be empty")
+            onNameError(context.getString(R.string.error_empty_name))
             isValid = false
         }
 
         if (escuderia.isBlank()) {
-            onEscuderiaError("Escuderia cannot be empty")
+            onEscuderiaError(context.getString(R.string.error_empty_squad))
             isValid = false
         }
 
         if (rating.isBlank()) {
-            onRatingError("Rating cannot be empty")
+            onRatingError(context.getString(R.string.error_empty_rating))
             isValid = false
         } else {
             try {
                 val ratingValue = rating.toInt()
                 if (ratingValue < 0 || ratingValue > 100) {
-                    onRatingError("Rating must be between 0 and 100")
+                    onRatingError(context.getString(R.string.error_rating_range))
                     isValid = false
                 }
             } catch (e: NumberFormatException) {
-                onRatingError("Rating must be a valid number")
+                onRatingError(context.getString(R.string.error_invalid_rating))
                 isValid = false
             }
         }
