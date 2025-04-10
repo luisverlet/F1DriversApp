@@ -35,7 +35,7 @@ val Typography = Typography(
     displayLarge = TextStyle(
         fontFamily = AbrilFatface,
         fontWeight = FontWeight.Normal,
-        fontSize = 36.sp
+        fontSize = 20.sp
     ),
     displayMedium = TextStyle(
         fontFamily = Montserrat,

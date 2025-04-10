@@ -33,4 +33,14 @@
     <string name="driver_deleted">Piloto eliminado con éxito</string>
     <string name="loading_pilots">Cargando pilotos e imágenes . . .</string>
     <string name="unknown_error">Ocurrió un error desconocido</string>
+
+    <string name="error_empty_name">Debes escribir un nombre</string>
+    <string name="error_empty_squad">Debes escribir un equipo</string>
+    <string name="error_empty_rating">Debes escribir una valoracion</string>
+    <string name="error_rating_range">La valoracion debe ser entre 0 y 100</string>
+    <string name="error_invalid_rating">La valoracion debe ser un numero valido</string>
+
+    <string name="driver_added_success">Conductor anadido</string>
+    <string name="error_prefix">Error: %1$s</string>
+
 </resources>
