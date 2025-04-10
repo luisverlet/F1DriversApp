@@ -1,4 +1,4 @@
-package com.example.f1driversapp.components
+package com.example.f1driversapp.components.drivers
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border

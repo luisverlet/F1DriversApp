@@ -5,7 +5,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object ApiClient {
 // Emulador:   private const val BASE_URL = "http://10.0.2.2:8080/api/"
-     private const val BASE_URL = "http://192.168.1.6:8080/api/"
+private const val BASE_URL = "https://f1-backend-production-8e57.up.railway.app/api/"
+
 
     val retrofit: Retrofit by lazy {
         Retrofit.Builder()

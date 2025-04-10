@@ -1,4 +1,4 @@
-package com.example.f1driversapp.components
+package com.example.f1driversapp.components.loading
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize

@@ -1,11 +1,13 @@
 <resources>
     <string name="app_name">F1DriversApp</string>
-    //Drivers
-    <string name="driver1">Charles Lecrec</string>
-    <string name="driver2">Lewis Hamilton</string>
-    <string name="driver1_about">The fastest man alive</string>
-    <string name="driver2_about">The slowest man alive</string>
-    <string name="driver1_squad">RedBull</string>
-    <string name="driver2_squad">Ferrari</string>
+
+    <string name="expand_icon_description">Content Expand</string>
+    <string name="delete_button_description">Delete button</string>
+    <string name="driver_score_description">Driver score</string>
+    <string name="about_text">About</string>
+    <string name="delete_confirmation_title">Confirm Deletion</string>
+    <string name="delete_confirmation_message">Are you sure you want to delete this driver</string>
+    <string name="confirm_delete">Delete</string>
+    <string name="cancel">Cancel</string>
 
 </resources>

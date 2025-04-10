@@ -1,5 +1,6 @@
 package com.example.f1driversapp.screens
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -7,24 +8,31 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.f1driversapp.R
-import com.example.f1driversapp.components.DriverTopAppBar
-import com.example.f1driversapp.components.DriversScreen
-import com.example.f1driversapp.components.F1SearchBar
-import com.example.f1driversapp.components.LoadingComponent
+import com.example.f1driversapp.components.drivers.DriverTopAppBar
+import com.example.f1driversapp.components.drivers.DriversCard
+import com.example.f1driversapp.components.drivers.F1SearchBar
+import com.example.f1driversapp.components.loading.LoadingComponent
+import com.example.f1driversapp.models.Driver
 import com.example.f1driversapp.ui.theme.F1DriversAppTheme
 import com.example.f1driversapp.viewModel.DriverViewModel
-import kotlinx.coroutines.flow.collectLatest
-import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
 fun HomeScreen() {
@@ -44,10 +52,47 @@ fun DriverApp() {
     val isLoading by driverViewModel.isLoading.collectAsState()
     val error by driverViewModel.error.collectAsState()
     val driverImages = driverViewModel.driverImages
+    val isDeletingDriver by driverViewModel.isDeletingDriver.collectAsState()
+
+    val context = LocalContext.current
 
     var searchText by remember { mutableStateOf("") }
+    var driverToDelete by remember { mutableStateOf<Driver?>(null) }
 
-    // Filtrar pilotos según la búsqueda
+    if (driverToDelete != null) {
+        AlertDialog(
+            onDismissRequest = { driverToDelete = null },
+            title = { Text("Confirmar eliminación") },
+            text = { Text("¿Estás seguro que deseas eliminar a ${driverToDelete?.nombre}?") },
+            confirmButton = {
+                Button(
+                    onClick = {
+                        driverToDelete?.id?.let { driverId ->
+                            driverViewModel.deleteDriver(
+                                driverId = driverId,
+                                onSuccess = {
+                                    Toast.makeText(context, "Piloto eliminado correctamente", Toast.LENGTH_SHORT).show()
+                                    driverToDelete = null
+                                },
+                                onError = { errorMsg ->
+                                    Toast.makeText(context, errorMsg, Toast.LENGTH_LONG).show()
+                                    driverToDelete = null
+                                }
+                            )
+                        }
+                    }
+                ) {
+                    Text("Eliminar")
+                }
+            },
+            dismissButton = {
+                Button(onClick = { driverToDelete = null }) {
+                    Text("Cancelar")
+                }
+            }
+        )
+    }
+
     val filteredDrivers = if (searchText.isBlank()) {
         drivers
     } else {
@@ -73,15 +118,13 @@ fun DriverApp() {
     ) { padding ->
         Box(modifier = Modifier.fillMaxSize()) {
             when {
-                isLoading && drivers.isEmpty() -> {
-                    // Mostrar pantalla completa de carga solo cuando no hay datos
+                isLoading -> {
                     LoadingComponent(
-                        message = "Cargando pilotos...",
+                        message = "Cargando pilotos y sus imágenes...",
                         modifier = Modifier.align(Alignment.Center)
                     )
                 }
                 error != null && drivers.isEmpty() -> {
-                    // Mostrar error cuando no se pueden cargar los pilotos
                     Text(
                         text = error ?: "Error desconocido",
                         modifier = Modifier
@@ -90,16 +133,19 @@ fun DriverApp() {
                     )
                 }
                 else -> {
-                    // Mostrar la lista de pilotos
                     LazyColumn(
                         contentPadding = padding,
                         modifier = Modifier.fillMaxSize()
                     ) {
                         items(filteredDrivers) { driver ->
-                            DriversScreen(
+                            DriversCard(
                                 driver = driver,
                                 driverImage = driverImages[driver.id],
-                                isLoading = isLoading && driverImages[driver.id] == null,
+                                isLoading = false,
+                                onDelete = { driverId ->
+                                    // Buscar el piloto a eliminar
+                                    driverToDelete = drivers.find { it.id == driverId }
+                                },
                                 modifier = Modifier.padding(dimensionResource(R.dimen.padding_small))
                             )
                         }
@@ -108,11 +154,4 @@ fun DriverApp() {
             }
         }
     }
-}
-
-
-@Preview
-@Composable
-fun HomeScreenPreview() {
-    HomeScreen()
 }

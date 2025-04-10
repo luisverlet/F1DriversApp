@@ -1,9 +1,7 @@
 package com.example.f1driversapp.viewModel
 
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import androidx.compose.ui.graphics.ImageBitmap
-import androidx.compose.ui.graphics.asImageBitmap
+import android.util.Log
+import androidx.compose.runtime.mutableStateMapOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.f1driversapp.models.Driver
@@ -16,72 +14,98 @@ import okhttp3.ResponseBody
 
 class DriverViewModel : ViewModel() {
 
-    private val _isLoading = MutableStateFlow(false)
-    val isLoading: StateFlow<Boolean> = _isLoading.asStateFlow()
-
     private val _drivers = MutableStateFlow<List<Driver>>(emptyList())
     val drivers: StateFlow<List<Driver>> = _drivers.asStateFlow()
+
+    private val _isLoading = MutableStateFlow(true)
+    val isLoading: StateFlow<Boolean> = _isLoading.asStateFlow()
 
     private val _error = MutableStateFlow<String?>(null)
     val error: StateFlow<String?> = _error.asStateFlow()
 
-    // Para almacenar imágenes en cache
-    private val _driverImages = mutableMapOf<Int, ImageBitmap>()
-    val driverImages: Map<Int, ImageBitmap> get() = _driverImages
+
+    private val _isDeletingDriver = MutableStateFlow(false)
+    val isDeletingDriver: StateFlow<Boolean> = _isDeletingDriver.asStateFlow()
+
+    val driverImages = mutableStateMapOf<Int?, ResponseBody?>()
+
+    private var imagesLeftToLoad = 0
 
     init {
-        loadDrivers()
+        fetchDrivers()
     }
 
-    private fun loadDrivers() {
+    fun fetchDrivers() {
         viewModelScope.launch {
+            _isLoading.value = true
+            _error.value = null
+            driverImages.clear()
             try {
-                _isLoading.value = true
-                _error.value = null
-
                 val driversList = ApiFunctions.fetchAllDrivers()
                 _drivers.value = driversList
 
-                // Precarga las imágenes de los pilotos
+                imagesLeftToLoad = driversList.count { it.id != null }
+
+                if (imagesLeftToLoad == 0) {
+                    _isLoading.value = false
+                    return@launch
+                }
+
                 driversList.forEach { driver ->
-                    loadDriverImage(driver.id)
+                    driver.id?.let { driverId ->
+                        loadDriverImage(driverId)
+                    }
                 }
             } catch (e: Exception) {
-                _error.value = "Error al cargar los pilotos: ${e.message}"
-            } finally {
+                Log.e("DriverViewModel", "Error fetching drivers", e)
+                _error.value = "Failed to load drivers: ${e.message}"
                 _isLoading.value = false
             }
         }
     }
 
-    private suspend fun loadDriverImage(id: Int) {
-        try {
-            val imageResponse = ApiFunctions.fetchDriverImage(id)
-            val bitmap = convertResponseBodyToBitmap(imageResponse)
-            bitmap?.let {
-                _driverImages[id] = it.asImageBitmap()
+    private fun loadDriverImage(id: Int) {
+        viewModelScope.launch {
+            try {
+                val image = ApiFunctions.fetchDriverImage(id)
+                driverImages[id] = image
+            } catch (e: Exception) {
+                Log.e("DriverViewModel", "Error loading image for driver $id", e)
+                driverImages[id] = null
+            } finally {
+                imagesLeftToLoad--
+                if (imagesLeftToLoad <= 0) {
+                    _isLoading.value = false
+                }
             }
-        } catch (e: Exception) {
-            println("Error cargando imagen del piloto $id: ${e.message}")
         }
     }
 
-    private fun convertResponseBodyToBitmap(responseBody: ResponseBody): Bitmap? {
-        return try {
-            responseBody.byteStream().use { inputStream ->
-                BitmapFactory.decodeStream(inputStream)
+    fun deleteDriver(driverId: Int, onSuccess: () -> Unit, onError: (String) -> Unit) {
+        viewModelScope.launch {
+            try {
+                _isDeletingDriver.value = true
+
+                val response = ApiFunctions.deleteDriver(driverId)
+
+                if (response.isSuccessful) {
+
+                    _drivers.value = _drivers.value.filter { it.id != driverId }
+
+                    driverImages.remove(driverId)
+                    onSuccess()
+                } else {
+                    val errorMsg = "Error al eliminar piloto: ${response.errorBody()?.string() ?: "Error desconocido"}"
+                    Log.e("DriverViewModel", errorMsg)
+                    onError(errorMsg)
+                }
+            } catch (e: Exception) {
+                val errorMsg = "Error al eliminar piloto: ${e.message ?: "Error desconocido"}"
+                Log.e("DriverViewModel", errorMsg, e)
+                onError(errorMsg)
+            } finally {
+                _isDeletingDriver.value = false
             }
-        } catch (e: Exception) {
-            println("Error al convertir ResponseBody a Bitmap: ${e.message}")
-            null
         }
-    }
-
-    fun getDriverImage(id: Int): ImageBitmap? {
-        return _driverImages[id]
-    }
-
-    fun refreshData() {
-        loadDrivers()
     }
 }

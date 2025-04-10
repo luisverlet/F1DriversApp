@@ -14,16 +14,18 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.f1driversapp.navigation.AppNavigation
 import com.example.f1driversapp.navigation.BottomNavBar
 import com.example.f1driversapp.navigation.NavItemList
 import com.example.f1driversapp.screens.AddScreen
 import com.example.f1driversapp.screens.HomeScreen
 import com.example.f1driversapp.ui.theme.F1DriversAppTheme
+import androidx.compose.runtime.*
+
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,7 +33,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             F1DriversAppTheme {
-                BottomNavScreen()
+                AppNavigation()
             }
         }
     }
@@ -55,6 +57,7 @@ fun BottomNavScreen(){
         ContentScreen(selectedIndex)
     }
 }
+
 
 @Composable
 fun ContentScreen(selectedIndex: Int) {
