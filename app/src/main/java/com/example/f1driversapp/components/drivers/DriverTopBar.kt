@@ -46,7 +46,7 @@ fun DriverTopAppBar(modifier: Modifier = Modifier) {
                     modifier = Modifier.size(50.dp)
                 )
                 Text(
-                    text = "F1Drivers",
+                    text = stringResource(R.string.app_title),
                     style = MaterialTheme.typography.titleSmall
                 )
             }
@@ -72,7 +72,7 @@ fun F1SearchBar(
             .border(width = 1.dp, color = MaterialTheme.colorScheme.outlineVariant, shape = MaterialTheme.shapes.large),
         placeholder = {
             Text(
-                "Buscar pilotos...",
+                stringResource(R.string.search_text),
                 style = MaterialTheme.typography.bodyMedium.copy(
                     color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
                 )
@@ -81,7 +81,7 @@ fun F1SearchBar(
         leadingIcon = {
             Icon(
                 Icons.Default.Search,
-                contentDescription = "Buscar",
+                contentDescription = stringResource(R.string.search_icon_description),
                 tint = MaterialTheme.colorScheme.primary,
                 modifier = Modifier.size(20.dp)
             )
@@ -97,7 +97,7 @@ fun F1SearchBar(
                 ) {
                     Icon(
                         Icons.Default.Close,
-                        contentDescription = "Limpiar",
+                        contentDescription = stringResource(R.string.close_icon_description),
                         tint = MaterialTheme.colorScheme.primary,
                         modifier = Modifier.size(16.dp)
                     )

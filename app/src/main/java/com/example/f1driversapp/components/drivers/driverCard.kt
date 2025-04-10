@@ -10,6 +10,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.stringResource
 import com.example.f1driversapp.R
 import com.example.f1driversapp.components.buttons.DeleteButton
 import com.example.f1driversapp.components.buttons.DriverItemButton
@@ -92,7 +93,7 @@ private fun DriverCardHeader(
         verticalAlignment = Alignment.CenterVertically
     ) {
         DriverIcon(driverImage, isLoading, driver.nombre)
-        DriverInfo(driver.nombre ?: "Nombre no disponible", driver.escuderia ?: "Escudería no disponible")
+        DriverInfo(driver.nombre ?: stringResource(R.string.no_available_name), driver.escuderia ?: stringResource(R.string.no_available_squad))
         Spacer(Modifier.weight(1f))
         DriverItemButton(
             onClick = onExpandClick,
@@ -113,7 +114,7 @@ private fun DriverCardExpandedContent(
             .padding(bottom = dimensionResource(R.dimen.padding_small))
     ) {
         DriverAbout(
-            driverAbout = driver.descripcion ?: "Información no disponible",
+            driverAbout = driver.descripcion ?: stringResource(R.string.no_available_about),
             modifier = Modifier
                 .weight(1f)
                 .padding(

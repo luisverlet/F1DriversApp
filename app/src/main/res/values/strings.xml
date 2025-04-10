@@ -1,13 +1,42 @@
 <resources>
     <string name="app_name">F1DriversApp</string>
 
+    // Description
     <string name="expand_icon_description">Content Expand</string>
     <string name="delete_button_description">Delete button</string>
     <string name="driver_score_description">Driver score</string>
+    <string name="search_icon_description">Search </string>
+    <string name="close_icon_description">Clean </string>
+    <string name="selected_avatar_description">Selected Profile Avatar</string>
+    <string name="default_avatar_description">Default Profile Avatar</string>
+    <string name="edit_icon_avatar_description">Edit Avatar</string>
+
+    //Components
+    <string name="confirm">Confirm</string>
+    <string name="loading">Loading. . .</string>
+    <string name="no_available_name">No name available</string>
+    <string name="no_available_squad">No squad available</string>
+    <string name="no_available_about">No information available</string>
+    <string name="input_name">Name</string>
+    <string name="input_description">Description (Optional)</string>
+    <string name="input_squad">Squad</string>
+    <string name="input_rating">Rating (0 – 100)</string>
     <string name="about_text">About</string>
-    <string name="delete_confirmation_title">Confirm Deletion</string>
-    <string name="delete_confirmation_message">Are you sure you want to delete this driver</string>
     <string name="confirm_delete">Delete</string>
     <string name="cancel">Cancel</string>
+    <string name="app_title">F1Drivers</string>
+    <string name="search_text">Search pilots . . .</string>
+
+    //Screens
+    <string name="delete_confirmation_title">Confirm Deletion</string>
+    <string name="delete_confirmation_message">Are you sure you want to delete this driver</string>
+    <string name="driver_deleted">Driver deleted successfully</string>
+    <string name="loading_pilots">Loading drivers and images . . . </string>
+    <string name="unknown_error">An unknown error occurred</string>
+
+
+
+
+
 
 </resources>

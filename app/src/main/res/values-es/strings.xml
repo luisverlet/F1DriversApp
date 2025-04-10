@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name">F1DriversApp</string>
+
+    <!-- Descripciones -->
+    <string name="expand_icon_description">Expandir contenido</string>
+    <string name="delete_button_description">Botón de eliminar</string>
+    <string name="driver_score_description">Puntuación del piloto</string>
+    <string name="search_icon_description">Buscar</string>
+    <string name="close_icon_description">Limpiar</string>
+    <string name="selected_avatar_description">Avatar de perfil seleccionado</string>
+    <string name="default_avatar_description">Avatar de perfil predeterminado</string>
+    <string name="edit_icon_avatar_description">Editar avatar</string>
+
+    <!-- Componentes -->
+    <string name="confirm">Confirmar</string>
+    <string name="loading">Cargando. . .</string>
+    <string name="no_available_name">Nombre no disponible</string>
+    <string name="no_available_squad">Escudería no disponible</string>
+    <string name="no_available_about">Información no disponible</string>
+    <string name="input_name">Nombre</string>
+    <string name="input_description">Descripción (opcional)</string>
+    <string name="input_squad">Escudería</string>
+    <string name="input_rating">Valoración (0 – 100)</string>
+    <string name="about_text">Acerca de</string>
+    <string name="confirm_delete">Eliminar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="app_title">F1Drivers</string>
+    <string name="search_text">Buscar pilotos . . .</string>
+
+    <!-- Pantallas -->
+    <string name="delete_confirmation_title">Confirmar eliminación</string>
+    <string name="delete_confirmation_message">¿Estás seguro de que deseas eliminar este piloto?</string>
+    <string name="driver_deleted">Piloto eliminado con éxito</string>
+    <string name="loading_pilots">Cargando pilotos e imágenes . . .</string>
+    <string name="unknown_error">Ocurrió un error desconocido</string>
+</resources>
