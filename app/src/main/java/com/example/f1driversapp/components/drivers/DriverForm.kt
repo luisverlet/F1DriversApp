@@ -7,8 +7,10 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
+import com.example.f1driversapp.R
 import com.example.f1driversapp.components.buttons.ConfirmButton
 import com.example.f1driversapp.models.Driver
 import com.example.f1driversapp.utils.DriverValidator
@@ -56,7 +58,7 @@ fun DriverForm(
                 name = it
                 nameError = ""
             },
-            placeholder = "Name",
+            placeholder = stringResource(R.string.input_name),
             isError = nameError.isNotEmpty(),
             errorMessage = nameError,
             modifier = Modifier.padding(bottom = 16.dp)
@@ -66,7 +68,7 @@ fun DriverForm(
         DriverInputField(
             value = description,
             onValueChange = { description = it },
-            placeholder = "Description (optional)",
+            placeholder = stringResource(R.string.input_description),
             modifier = Modifier.padding(bottom = 16.dp)
         )
 
@@ -77,7 +79,7 @@ fun DriverForm(
                 escuderia = it
                 escuderiaError = ""
             },
-            placeholder = "Escuderia",
+            placeholder = stringResource(R.string.input_squad),
             isError = escuderiaError.isNotEmpty(),
             errorMessage = escuderiaError,
             modifier = Modifier.padding(bottom = 16.dp)
@@ -92,7 +94,7 @@ fun DriverForm(
                     ratingError = ""
                 }
             },
-            placeholder = "Rating (0-100)",
+            placeholder = stringResource(R.string.input_rating),
             isError = ratingError.isNotEmpty(),
             errorMessage = ratingError,
             modifier = Modifier.padding(bottom = 24.dp)

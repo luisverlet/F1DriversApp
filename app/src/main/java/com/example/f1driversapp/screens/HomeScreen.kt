@@ -10,6 +10,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -23,6 +24,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.f1driversapp.R
@@ -62,8 +64,8 @@ fun DriverApp() {
     if (driverToDelete != null) {
         AlertDialog(
             onDismissRequest = { driverToDelete = null },
-            title = { Text("Confirmar eliminación") },
-            text = { Text("¿Estás seguro que deseas eliminar a ${driverToDelete?.nombre}?") },
+            title = { Text(stringResource(R.string.delete_confirmation_title)) },
+            text = { Text(text = stringResource(R.string.delete_confirmation_message), color = MaterialTheme.colorScheme.onSecondaryContainer) },
             confirmButton = {
                 Button(
                     onClick = {
@@ -71,7 +73,7 @@ fun DriverApp() {
                             driverViewModel.deleteDriver(
                                 driverId = driverId,
                                 onSuccess = {
-                                    Toast.makeText(context, "Piloto eliminado correctamente", Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(context, "Driver Deleted", Toast.LENGTH_SHORT).show()
                                     driverToDelete = null
                                 },
                                 onError = { errorMsg ->
@@ -82,12 +84,12 @@ fun DriverApp() {
                         }
                     }
                 ) {
-                    Text("Eliminar")
+                    Text((stringResource(R.string.confirm_delete)))
                 }
             },
             dismissButton = {
                 Button(onClick = { driverToDelete = null }) {
-                    Text("Cancelar")
+                    Text((stringResource(R.string.cancel)))
                 }
             }
         )
@@ -120,13 +122,13 @@ fun DriverApp() {
             when {
                 isLoading -> {
                     LoadingComponent(
-                        message = "Cargando pilotos y sus imágenes...",
+                        message = stringResource(R.string.loading_pilots),
                         modifier = Modifier.align(Alignment.Center)
                     )
                 }
                 error != null && drivers.isEmpty() -> {
                     Text(
-                        text = error ?: "Error desconocido",
+                        text = error ?: stringResource(R.string.unknown_error),
                         modifier = Modifier
                             .align(Alignment.Center)
                             .padding(16.dp)

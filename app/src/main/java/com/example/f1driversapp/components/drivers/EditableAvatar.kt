@@ -19,6 +19,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import com.example.f1driversapp.R
@@ -48,7 +49,7 @@ fun EditableAvatar(
         if (selectedImageUri != null) {
             Image(
                 painter = rememberAsyncImagePainter(selectedImageUri),
-                contentDescription = "Selected Profile Avatar",
+                contentDescription = stringResource(R.string.selected_avatar_description),
                 modifier = Modifier
                     .size(100.dp)
                     .clip(CircleShape),
@@ -57,7 +58,7 @@ fun EditableAvatar(
         } else {
             Image(
                 painter = painterResource(id = R.drawable.avatar_svgrepo_com),
-                contentDescription = "Default Profile Avatar",
+                contentDescription = stringResource(R.string.default_avatar_description),
                 modifier = Modifier
                     .size(100.dp)
                     .clip(CircleShape),
@@ -78,7 +79,7 @@ fun EditableAvatar(
         ) {
             Icon(
                 imageVector = Icons.Default.Edit,
-                contentDescription = "Edit Avatar",
+                contentDescription = stringResource(R.string.edit_icon_avatar_description),
                 modifier = Modifier.size(18.dp),
                 tint = Color.Black
             )

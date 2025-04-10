@@ -19,7 +19,7 @@ fun DeleteConfirmationDialog(
         title = { Text(text = stringResource(R.string.delete_confirmation_title)) },
         text = {
             Text(
-                text = stringResource(R.string.delete_confirmation_message),
+                text = stringResource(R.string.delete_button_description),
                 color = MaterialTheme.colorScheme.secondary
             )
         },
